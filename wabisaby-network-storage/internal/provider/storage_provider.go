@@ -18,10 +18,10 @@ import (
 	"strings"
 
 	"github.com/google/uuid"
+	sdk "github.com/wabisaby/wabisaby-plugin-sdk"
 	"github.com/wabisaby/wabisaby-plugins/wabisaby-network-storage/internal/coordinator"
 	"github.com/wabisaby/wabisaby-plugins/wabisaby-network-storage/internal/ipfs"
 	nodepb "github.com/wabisaby/wabisaby/api/generated/proto/node"
-	sdk "github.com/wabisaby/wabisaby/pkg/plugin/sdk/go"
 )
 
 // Config holds the plugin configuration.

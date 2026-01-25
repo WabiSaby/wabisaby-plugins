@@ -14,8 +14,8 @@ package main
 import (
 	"log"
 
+	sdk "github.com/wabisaby/wabisaby-plugin-sdk"
 	"github.com/wabisaby/wabisaby-plugins/wabisaby-network-storage/internal/provider"
-	sdk "github.com/wabisaby/wabisaby/pkg/plugin/sdk/go"
 )
 
 func main() {
