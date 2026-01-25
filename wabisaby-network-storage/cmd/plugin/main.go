@@ -14,7 +14,7 @@ package main
 import (
 	"log"
 
-	sdk "github.com/wabisaby/wabisaby-plugin-sdk"
+	sdk "github.com/wabisaby/wabisaby-plugin-sdk/go"
 	"github.com/wabisaby/wabisaby-plugins/wabisaby-network-storage/internal/provider"
 )
 

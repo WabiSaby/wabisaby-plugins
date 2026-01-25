@@ -1,14 +1,31 @@
 module github.com/wabisaby/wabisaby-plugins/wabisaby-network-storage
 
-go 1.24.0
+go 1.24.4
 
 require (
+	github.com/WabiSaby/WabiSaby-Protos v0.0.0
 	github.com/google/uuid v1.6.0
-	github.com/wabisaby/wabisaby v0.0.0
 	github.com/wabisaby/wabisaby-plugin-sdk v0.0.0
-	google.golang.org/grpc v1.74.2
-	google.golang.org/protobuf v1.36.7
+	google.golang.org/grpc v1.78.0
 )
 
-replace github.com/wabisaby/wabisaby => ../../../WabiSaby-Go
-replace github.com/wabisaby/wabisaby-plugin-sdk => ../../../WabiSaby-Plugin-SDK
+require (
+	github.com/fatih/color v1.7.0 // indirect
+	github.com/golang/protobuf v1.5.4 // indirect
+	github.com/hashicorp/go-hclog v0.14.1 // indirect
+	github.com/hashicorp/go-plugin v1.6.0 // indirect
+	github.com/hashicorp/yamux v0.1.1 // indirect
+	github.com/mattn/go-colorable v0.1.4 // indirect
+	github.com/mattn/go-isatty v0.0.10 // indirect
+	github.com/mitchellh/go-testing-interface v0.0.0-20171004221916-a61a99592b77 // indirect
+	github.com/oklog/run v1.0.0 // indirect
+	golang.org/x/net v0.47.0 // indirect
+	golang.org/x/sys v0.38.0 // indirect
+	golang.org/x/text v0.31.0 // indirect
+	google.golang.org/genproto/googleapis/rpc v0.0.0-20251029180050-ab9386a59fda // indirect
+	google.golang.org/protobuf v1.36.11 // indirect
+)
+
+replace github.com/wabisaby/wabisaby-plugin-sdk => ../../WabiSaby-Plugin-SDK
+
+replace github.com/WabiSaby/WabiSaby-Protos => ../../WabiSaby-Protos
