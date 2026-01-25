@@ -1,0 +1,9 @@
+id: wabisaby-network-storage
+name: WabiSaby Network Storage
+description: Distributed storage powered by WabiSaby Community Nodes (IPFS). Get paid for storing data!
+version: 1.0.0
+author: WabiSaby
+runtime: go
+permissions:
+  - storage:provider
+official: true
