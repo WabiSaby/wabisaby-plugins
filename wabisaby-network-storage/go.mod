@@ -3,7 +3,7 @@ module github.com/wabisaby/wabisaby-plugins/wabisaby-network-storage
 go 1.24.4
 
 require (
-	github.com/WabiSaby/WabiSaby-Protos v0.0.0
+	github.com/wabisaby/wabisaby-protos v0.0.0
 	github.com/google/uuid v1.6.0
 	github.com/wabisaby/wabisaby-plugin-sdk v0.0.0
 	google.golang.org/grpc v1.78.0
@@ -28,4 +28,4 @@ require (
 
 replace github.com/wabisaby/wabisaby-plugin-sdk => ../../WabiSaby-Plugin-SDK
 
-replace github.com/WabiSaby/WabiSaby-Protos => ../../WabiSaby-Protos
+replace github.com/wabisaby/wabisaby-protos => ../../WabiSaby-Protos

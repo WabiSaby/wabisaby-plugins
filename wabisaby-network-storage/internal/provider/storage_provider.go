@@ -17,11 +17,11 @@ import (
 	"path/filepath"
 	"strings"
 
-	nodepb "github.com/WabiSaby/WabiSaby-Protos/go/node"
 	"github.com/google/uuid"
 	sdk "github.com/wabisaby/wabisaby-plugin-sdk/go"
 	"github.com/wabisaby/wabisaby-plugins/wabisaby-network-storage/internal/coordinator"
 	"github.com/wabisaby/wabisaby-plugins/wabisaby-network-storage/internal/ipfs"
+	nodepb "github.com/wabisaby/wabisaby-protos/go/node"
 )
 
 // Config holds the plugin configuration.

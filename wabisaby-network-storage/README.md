@@ -110,7 +110,8 @@ Or use the repository build script:
 ## Dependencies
 
 - `github.com/wabisaby/wabisaby-plugin-sdk` - WabiSaby Plugin SDK
-- `github.com/wabisaby/wabisaby/api/generated/proto/node` - Node Coordinator protobuf definitions
+- `github.com/WabiSaby/WabiSaby-Protos` - Node Coordinator protobuf definitions
+- `github.com/google/uuid` - UUID generation library
 - `google.golang.org/grpc` - gRPC client library
 - `google.golang.org/protobuf` - Protocol buffers
 
