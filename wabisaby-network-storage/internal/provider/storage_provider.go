@@ -18,7 +18,7 @@ import (
 	"strings"
 
 	"github.com/google/uuid"
-	sdk "github.com/wabisaby/wabisaby-plugin-sdk/go"
+	sdk "github.com/wabisaby/wabisaby-plugin-sdk"
 	"github.com/wabisaby/wabisaby-plugins/wabisaby-network-storage/internal/coordinator"
 	"github.com/wabisaby/wabisaby-plugins/wabisaby-network-storage/internal/ipfs"
 	nodepb "github.com/wabisaby/wabisaby-protos/go/node"
