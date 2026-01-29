@@ -3,9 +3,9 @@ module github.com/wabisaby/wabisaby-plugins/wabisaby-network-storage
 go 1.24.4
 
 require (
-	github.com/wabisaby/wabisaby-protos v0.0.0
 	github.com/google/uuid v1.6.0
-	github.com/wabisaby/wabisaby-plugin-sdk v0.0.0
+	github.com/wabisaby/wabisaby-plugin-sdk v0.0.1
+	github.com/wabisaby/wabisaby-protos v0.0.1
 	google.golang.org/grpc v1.78.0
 )
 
