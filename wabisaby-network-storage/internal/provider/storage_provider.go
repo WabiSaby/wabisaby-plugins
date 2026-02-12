@@ -14,7 +14,6 @@ package provider
 import (
 	"fmt"
 	"os"
-	"path/filepath"
 	"strings"
 
 	"github.com/google/uuid"
@@ -69,8 +68,8 @@ func (p *WabiSabyStorageProvider) Initialize(accessor *sdk.ConfigAccessor) error
 	p.ipfs = ipfs.NewClient(p.config.APIURL)
 
 	// Register commands
-	if err := p.plugin.RegisterCommand("storage.upload_hls", p.UploadHLSFiles); err != nil {
-		return fmt.Errorf("register upload_hls command: %w", err)
+	if err := p.plugin.RegisterCommand("storage.upload_audio", p.UploadAudio); err != nil {
+		return fmt.Errorf("register upload_audio command: %w", err)
 	}
 	if err := p.plugin.RegisterCommand("storage.get_size", p.GetFileSizeMB); err != nil {
 		return fmt.Errorf("register get_size command: %w", err)
@@ -82,40 +81,22 @@ func (p *WabiSabyStorageProvider) Initialize(accessor *sdk.ConfigAccessor) error
 	return nil
 }
 
-// UploadHLSFiles uploads HLS files to IPFS and notifies the coordinator.
-func (p *WabiSabyStorageProvider) UploadHLSFiles(ctx *sdk.Context, req *sdk.UploadHLSRequest) (string, error) {
-	// 1. Upload segments to IPFS
-	results, err := p.ipfs.AddDirectory(ctx.Context, req.SegmentsDir)
+// UploadAudio uploads an audio file (FLAC) to IPFS and notifies the coordinator.
+func (p *WabiSabyStorageProvider) UploadAudio(ctx *sdk.Context, req *sdk.UploadAudioRequest) (string, error) {
+	// 1. Upload single file to IPFS
+	result, err := p.ipfs.AddFile(ctx.Context, req.FilePath)
 	if err != nil {
-		return "", fmt.Errorf("failed to upload segments to IPFS: %w", err)
+		return "", fmt.Errorf("failed to upload file to IPFS: %w", err)
 	}
 
-	var rootCID string
-	var playlistCID string
-	var segmentCIDs []string
-	var totalSize int64
-
-	for _, res := range results {
-		if res.Name == "" { // Root directory if wrap-with-directory=true
-			rootCID = res.Hash
-		} else if res.Name == filepath.Base(req.PlaylistPath) {
-			playlistCID = res.Hash
-		} else {
-			segmentCIDs = append(segmentCIDs, res.Hash)
-		}
-	}
-
-	// If wrap-with-directory=true was not used or didn't return a root name,
-	// we might need to handle it differently.
-	if rootCID == "" && len(results) > 0 {
-		rootCID = results[len(results)-1].Hash // Usually the last one is the root
-	}
+	cid := result.Hash
 
 	// Get accurate size
-	stat, err := p.ipfs.Stat(ctx.Context, rootCID)
-	if err == nil {
-		totalSize = stat.CumulativeSize
+	stat, err := p.ipfs.Stat(ctx.Context, cid)
+	if err != nil {
+		return "", fmt.Errorf("failed to get IPFS stat: %w", err)
 	}
+	totalSize := stat.CumulativeSize
 
 	// 2. Notify coordinator about the new content
 	// Use TenantID as SongID if not provided (placeholder logic)
@@ -123,9 +104,9 @@ func (p *WabiSabyStorageProvider) UploadHLSFiles(ctx *sdk.Context, req *sdk.Uplo
 
 	indexReq := &nodepb.IndexContentRequest{
 		SongId:         songID,
-		Cid:            rootCID,
-		PlaylistCid:    playlistCID,
-		SegmentCids:    segmentCIDs,
+		Cid:            cid,
+		PlaylistCid:    "",         // FLAC: empty
+		SegmentCids:    []string{}, // FLAC: empty
 		TotalSizeBytes: totalSize,
 		ReplicationMin: int32(p.config.ReplicationFactor),
 		ReplicationMax: int32(p.config.ReplicationFactor * 2),
@@ -136,13 +117,13 @@ func (p *WabiSabyStorageProvider) UploadHLSFiles(ctx *sdk.Context, req *sdk.Uplo
 		return "", fmt.Errorf("failed to index content in coordinator: %w", err)
 	}
 
-	return fmt.Sprintf("%s/ipfs/%s/%s", p.config.GatewayURL, rootCID, filepath.Base(req.PlaylistPath)), nil
+	return fmt.Sprintf("%s/ipfs/%s/audio.flac", p.config.GatewayURL, cid), nil
 }
 
 // GetFileSizeMB returns the file size in MB from a CDN URL.
 func (p *WabiSabyStorageProvider) GetFileSizeMB(ctx *sdk.Context, cdnURL string) (float64, error) {
 	// Parse CID from URL
-	// Gateway URL: https://gateway.wabisaby.com/ipfs/CID/playlist.m3u8
+	// Gateway URL: https://gateway.wabisaby.com/ipfs/CID/audio.flac
 	parts := strings.Split(cdnURL, "/ipfs/")
 	if len(parts) < 2 {
 		return 0, fmt.Errorf("invalid IPFS URL: %s", cdnURL)

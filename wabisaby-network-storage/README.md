@@ -4,7 +4,7 @@ Distributed storage provider powered by WabiSaby Community Nodes (IPFS). This pl
 
 ## Features
 
-- **Distributed Storage**: Upload HLS audio files to IPFS network
+- **Distributed Storage**: Upload FLAC audio files to IPFS network
 - **Automatic Replication**: Content is automatically replicated across WabiSaby nodes
 - **Coordinator Integration**: Seamlessly integrates with WabiSaby Node Coordinator
 - **CDN URLs**: Generates gateway URLs for accessing stored content
@@ -33,15 +33,14 @@ The plugin supports the following configuration options:
 
 The plugin provides the following commands:
 
-### `storage.upload_hls`
+### `storage.upload_audio`
 
-Uploads HLS files (playlist and segments) to IPFS and registers them with the coordinator.
+Uploads an audio file (FLAC) to IPFS and registers it with the coordinator.
 
 **Request:**
 ```json
 {
-  "playlist_path": "/path/to/playlist.m3u8",
-  "segments_dir": "/path/to/segments",
+  "file_path": "/path/to/audio.flac",
   "base_filename": "song"
 }
 ```
@@ -49,7 +48,7 @@ Uploads HLS files (playlist and segments) to IPFS and registers them with the co
 **Response:**
 ```json
 {
-  "cdn_url": "https://gateway.wabisaby.com/ipfs/QmXXX/playlist.m3u8"
+  "cdn_url": "https://gateway.wabisaby.com/ipfs/QmXXX/audio.flac"
 }
 ```
 
@@ -60,7 +59,7 @@ Gets the total size of a file in MB from its CDN URL.
 **Request:**
 ```json
 {
-  "cdn_url": "https://gateway.wabisaby.com/ipfs/QmXXX/playlist.m3u8"
+  "cdn_url": "https://gateway.wabisaby.com/ipfs/QmXXX/audio.flac"
 }
 ```
 
@@ -78,7 +77,7 @@ Deletes an audio file from storage (unpins from IPFS nodes).
 **Request:**
 ```json
 {
-  "cdn_url": "https://gateway.wabisaby.com/ipfs/QmXXX/playlist.m3u8"
+  "cdn_url": "https://gateway.wabisaby.com/ipfs/QmXXX/audio.flac"
 }
 ```
 
@@ -117,7 +116,7 @@ Or use the repository build script:
 
 ## Usage
 
-Once installed and enabled in WabiSaby, the plugin can be used as a storage provider. When audio files are transcoded to HLS format, they will be automatically uploaded to the IPFS network and registered with the Node Coordinator for replication across the WabiSaby network.
+Once installed and enabled in WabiSaby, the plugin can be used as a storage provider. When audio files are transcoded to FLAC format, they will be automatically uploaded to the IPFS network and registered with the Node Coordinator for replication across the WabiSaby network.
 
 ## Permissions
 

@@ -46,6 +46,54 @@ type AddResponse struct {
 	Hash string `json:"Hash"`
 }
 
+// AddFile adds a single file to IPFS and returns its CID.
+func (c *Client) AddFile(ctx context.Context, filePath string) (*AddResponse, error) {
+	file, err := os.Open(filePath)
+	if err != nil {
+		return nil, fmt.Errorf("open file: %w", err)
+	}
+	defer file.Close()
+
+	body := &bytes.Buffer{}
+	writer := multipart.NewWriter(body)
+
+	part, err := writer.CreateFormFile("file", filepath.Base(filePath))
+	if err != nil {
+		return nil, fmt.Errorf("create form file: %w", err)
+	}
+	if _, err := io.Copy(part, file); err != nil {
+		return nil, fmt.Errorf("copy file to form: %w", err)
+	}
+	if err := writer.Close(); err != nil {
+		return nil, err
+	}
+
+	url := fmt.Sprintf("%s/api/v0/add?pin=true", c.apiURL)
+	req, err := http.NewRequestWithContext(ctx, http.MethodPost, url, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header.Set("Content-Type", writer.FormDataContentType())
+
+	resp, err := c.httpClient.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer resp.Body.Close()
+
+	if resp.StatusCode != http.StatusOK {
+		bodyBytes, _ := io.ReadAll(resp.Body)
+		return nil, fmt.Errorf("IPFS add failed with status %d: %s", resp.StatusCode, string(bodyBytes))
+	}
+
+	var result AddResponse
+	if err := json.NewDecoder(resp.Body).Decode(&result); err != nil {
+		return nil, fmt.Errorf("decode response: %w", err)
+	}
+
+	return &result, nil
+}
+
 // StatResponse represents a response from IPFS object stat operation.
 type StatResponse struct {
 	CumulativeSize int64 `json:"CumulativeSize"`
