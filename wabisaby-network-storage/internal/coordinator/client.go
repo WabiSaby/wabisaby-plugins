@@ -15,7 +15,7 @@ import (
 	"context"
 	"fmt"
 
-	nodepb "github.com/wabisaby/wabisaby-protos/go/node"
+	nodepb "github.com/wabisaby/wabisaby-protos-go/go/node"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 )

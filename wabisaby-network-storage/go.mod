@@ -5,7 +5,7 @@ go 1.24.4
 require (
 	github.com/google/uuid v1.6.0
 	github.com/wabisaby/wabisaby-plugin-sdk v0.0.1
-	github.com/wabisaby/wabisaby-protos v0.0.1
+	github.com/wabisaby/wabisaby-protos-go v0.0.1
 	google.golang.org/grpc v1.78.0
 )
 
@@ -26,6 +26,6 @@ require (
 	google.golang.org/protobuf v1.36.11 // indirect
 )
 
-replace github.com/wabisaby/wabisaby-plugin-sdk => ../../WabiSaby-Plugin-SDK
+replace github.com/wabisaby/wabisaby-plugin-sdk => ../../wabisaby-plugin-sdk-go
 
-replace github.com/wabisaby/wabisaby-protos => ../../WabiSaby-Protos
+replace github.com/wabisaby/wabisaby-protos-go => ../../wabisaby-protos-go

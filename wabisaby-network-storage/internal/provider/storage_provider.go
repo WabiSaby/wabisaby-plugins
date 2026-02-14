@@ -20,7 +20,7 @@ import (
 	sdk "github.com/wabisaby/wabisaby-plugin-sdk"
 	"github.com/wabisaby/wabisaby-plugins/wabisaby-network-storage/internal/coordinator"
 	"github.com/wabisaby/wabisaby-plugins/wabisaby-network-storage/internal/ipfs"
-	nodepb "github.com/wabisaby/wabisaby-protos/go/node"
+	nodepb "github.com/wabisaby/wabisaby-protos-go/go/node"
 )
 
 // Config holds the plugin configuration.
