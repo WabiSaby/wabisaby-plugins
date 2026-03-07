@@ -1,0 +1,13 @@
+id: wabisaby-acoustid
+name: AcoustID Fingerprinting
+description: Identify uploaded songs using audio fingerprinting via AcoustID and Chromaprint. Links to MusicBrainz recordings.
+version: 1.0.0
+author: WabiSaby
+runtime: go
+type:
+  - metadata-resolver
+permissions:
+  - http:fetch
+  - secrets
+  - filesystem:read
+official: true
