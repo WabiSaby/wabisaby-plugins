@@ -1,0 +1,12 @@
+id: wabisaby-musicbrainz
+name: MusicBrainz Metadata
+description: Enrich song metadata using the MusicBrainz open music database. Resolves artist, album, genre, and release information.
+version: 1.0.0
+author: WabiSaby
+runtime: go
+type:
+  - metadata-resolver
+permissions:
+  - http:fetch
+  - secrets
+official: true
